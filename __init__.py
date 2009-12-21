@@ -18,9 +18,23 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""Hooks for enforcing coding style.
 
-"""hooks for enforcing coding style
+The hooks can be used by putting the following in your .hgrc file:
+
+    [hooks]
+    pre-commit.pyindent = python:style.pyindenthook
+    pre-commit.gofmt = python:style.gofmthook
+
+The first hook won't allow you to commit code that doesn't conform to PEP8
+recommended 4-space indentation. To fix this, use reindent.py, which comes
+with CPython. Similarly, the second hook enforces Go's standard coding style,
+as dictated by gofmt.
 """
+
+# TODO:
+#   enforce style on code obtained from hg pull
+#   should only check files being commited, not *all* modified files
 
 import os
 import sys

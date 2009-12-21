@@ -113,10 +113,10 @@ def pyindenthook(ui, repo, *args, **opts):
             if pi.run():
                 bad.append(f)
 
-    if not bad:
+    if bad:
         for f in bad:
             ui.status("pyindent -n %s\n" % f)
-        return True     # hook fails
+        return True
     return False
 
 # vim:ts=4:sw=4:expandtab

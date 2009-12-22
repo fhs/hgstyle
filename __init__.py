@@ -36,6 +36,8 @@ as dictated by gofmt.
 #   enforce style on code obtained from hg pull
 #   should only check files being commited, not *all* modified files
 
+from __future__ import with_statement
+
 import os
 import sys
 import subprocess

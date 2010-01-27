@@ -1,0 +1,10 @@
+Enable this extension by adding it to the extensions section
+of your .hgrc:
+
+	[extensions]
+	style = /home/fhs/src/hgstyle
+
+Note: the path above points to the root of the hgstyle source tree.
+
+If it's enabled, you should see instructions on how to use
+it with "hg help style".

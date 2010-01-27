@@ -26,10 +26,16 @@ The hooks can be used by putting the following in your .hgrc file:
     pre-commit.pyindent = python:style.pyindenthook
     pre-commit.gofmt = python:style.gofmthook
 
-The first hook won't allow you to commit code that doesn't conform to PEP8
-recommended 4-space indentation. To fix this, use reindent.py, which comes
-with CPython. Similarly, the second hook enforces Go's standard coding style,
-as dictated by gofmt.
+. The first hook won't allow you to commit code that doesn't conform to PEP8
+recommended 4-space indentation or have unnecessary whitespace. To fix this,
+use reindent.py, which comes with CPython and can be obtained from
+
+    http://svn.python.org/projects/python/trunk/Tools/scripts/reindent.py
+
+. The hook assumes reindent.py is saved as "pyindent" in $PATH and
+will output commands to fix the offending files.
+
+The second hook enforces Go's standard coding style, as dictated by gofmt.
 """
 
 # TODO:

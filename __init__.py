@@ -38,31 +38,20 @@ will output commands to fix the offending files.
 The second hook enforces Go's standard coding style, as dictated by gofmt.
 """
 
-# TODO:
-#   enforce style on code obtained from hg pull
-#   should only check files being commited, not *all* modified files
-
 from __future__ import with_statement
 
 import os
 import sys
 import subprocess
-from mercurial import cmdutil, error, util
+from mercurial import error, scmutil, util
+from os.path import join, relpath
+
 from . import pyindent
 
-
 def getchanged(ui, repo, args, opts):
-    matcher = cmdutil.match(repo, args, opts)
+    matcher = scmutil.match(repo[None], pats=opts['pats'], opts=opts['opts'])
     modified, added, _, _, _, _, _ = repo.status(match=matcher)
     return sorted(modified + added)
-
-def relpath(path, cwd):
-    """Return path relative to cwd
-    """
-    n = len(cwd)
-    if path.startswith(cwd) and path[n] == '/':
-        return path[n+1:]
-    return path
 
 def exceptionDetail():
     s = str(sys.exc_info()[0])
@@ -79,8 +68,7 @@ def gofmthook(ui, repo, *args, **opts):
     """Hook that prevents transaction if modified .go file needs
     be to gofmt'ed.
     """
-    cwd = os.getcwd()
-    files = [relpath(repo.root + '/' + f, cwd)
+    files = [relpath(join(repo.root, f))
                 for f in getchanged(ui, repo, args, opts)
                     if f.endswith('.go')]
     if not files:
@@ -110,8 +98,7 @@ def pyindenthook(ui, repo, *args, **opts):
     """Hook that prevents transaction if modified .py file need
     reindenting.
     """
-    cwd = os.getcwd()
-    files = [relpath(repo.root + '/' + f, cwd)
+    files = [relpath(join(repo.root, f))
                 for f in getchanged(ui, repo, args, opts)
                     if f.endswith('.py')]
     bad = []

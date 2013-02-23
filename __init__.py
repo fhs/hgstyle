@@ -77,7 +77,7 @@ def gofmthook(ui, repo, *args, **opts):
         cmd = subprocess.Popen(["gofmt", "-l"] + files,
                 shell=False, stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                close_fds=True)
+                close_fds=os.name != 'nt')
         cmd.stdin.close()
     except OSError, CalledProcessError:
         ui.warn("gofmt: %s\n" % exceptionDetail())
